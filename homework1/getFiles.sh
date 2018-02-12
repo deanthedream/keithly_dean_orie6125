@@ -2,7 +2,7 @@
 #this script gets the files necessary for homework1
 
 #what files are in server
-#directory=taq.12.2014/
+directory=taq.12.2014/
 #locate_dir=$'s3://'$directory
 #aws s3 ls locate_dir > fileNames.txt
 filename='filenames.txt'
@@ -16,7 +16,6 @@ echo 'done reducing to 7 filenames'
 
 filename2='filename2.txt'
 filelines2=`cat $filename2`
-
 
 for line in $filelines2 ; do #iterate through each line in filename
    echo $line
