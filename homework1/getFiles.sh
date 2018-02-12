@@ -17,13 +17,14 @@ echo 'done reducing to 7 filenames'
 filename2='filename2.txt'
 filelines2=`cat $filename2`
 
-for line in $filelines2 ; do #iterate through each line in filename
+for line in $filelines2 ; do #iterate through each line in filename2
    echo $line
    locate_dir=$'s3://'$directory$line
    sudo aws s3 cp $locate_dir ./temp.zip;
-   name_file="$(unzip -l temp.zip)"# | awk '/-----/ {p = ++p % 2; next} p {print $NF}')";
+   name_file="$(unzip -l temp.zip | awk '/-----/ {p = ++p % 2; next} p {print $NF}')";
    unzip temp.zip;
    rm -f temp.zip;
+   echo $name_file
    head -n 1000 $name_file  > tmp_file;
    mv tmp_file $name_file
 done
