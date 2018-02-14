@@ -23,4 +23,10 @@ for line in $fnames ; do
    sed "s/$/$fdate/" $newFname'6' > $newFname'7' ;
    #head -n 10 $newFname'7'
    #echo $fdate
+   rm $newFname'6'
+   rm $newFname'5'
+   rm $newFname'4'
+   rm $newFname'3'
+   rm $newFname'2'
+   rm $newFname
 done
