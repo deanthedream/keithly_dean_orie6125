@@ -10,4 +10,4 @@ fixlines.sh reformats all 1000 lines in each of the 7 files into the arrangement
 
 
 
-
+The execution time for the large file was 1428 seconds. (trying to improve this)

@@ -11,7 +11,7 @@ aws s3 ls s3://taq.12.2014/ > $filename
 #filelines=`cat $filename` #this gets the lines in filename
 
 
-head -n 1 $filename | sed -r 's/.*\s//' > filename2.txt #outputs first 7 lines of file to file
+head -n 1 $filename | sed -r 's/.*\s//' > filename3.txt #outputs first 7 lines of file to file
 echo 'done reducing to 7 filenames'
 
 filename3='filename3.txt'
