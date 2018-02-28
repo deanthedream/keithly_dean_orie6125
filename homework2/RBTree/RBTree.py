@@ -1,6 +1,49 @@
 #import statements
 import numpy as np
 
+
+class Node(object):
+    """A Node object
+    """
+
+    def __init__(self):
+        self.iData #data item (key)
+        self.dData #data item
+        self.rb = True#True for Red, Black for False
+        self.leftChild
+        self.rightChild
+
+    def insert(self, id, dd):
+        newNode = Node()
+        newNode.iData = id
+        newNode.dData = dd
+
+
+        if(root == None):
+            root = newNode
+        else:
+            current = root
+            parent
+            while(True):
+                parent = current
+                #Check colors of parents and children
+                if(current.rb == False and current.rightChild.rb == True and current.leftChild.rb == True):
+                    current.rb = True
+                    current.rightChild.rb = False
+                    current.leftChild.rb = False
+
+                if(id < newNode.iData):#go Left
+                    current = current.leftChild
+                    if(current == None):
+                        parent.leftChild = newNode
+                        return
+                else:#go right
+                    current = current.rightChild
+                    if(current == Null):
+                        parent.rightChild = newNode
+                        return
+        #END INSERT
+
 class RBTree(object):
     """A Red Black Tree Implementation
     """
@@ -19,7 +62,7 @@ class RBTree(object):
         #rootIndex = self.findRootIndex()#find root Index of tree
         self.replaceNullTree(num)#we iteratively search the tree until we find a null tree (or phantom leaf) and can insert the element
 
-        while(not self.tree_valid()):
+        #while(not self.tree_valid()):
             #We rotate the tree until the tree is valid
 
 
@@ -81,7 +124,7 @@ class RBTree(object):
         else:#self.RBTree[index]['num'] > num#The new node is a rightChild
             self.RBTree[index]['rightChild'] = num
 
-    def rotateTree(self):
+    #def rotateTree(self):
         #Should be able to rotate trees with a more stable state
 
 
