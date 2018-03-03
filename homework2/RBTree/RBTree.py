@@ -13,39 +13,63 @@ class Tree(object):
         def __init__(self,data):
             self.data = data #data
             self.rb = True#True for Red, Black for False
-            self.leftChild = None
-            self.rightChild = None
+            #self.leftChild = None
+            #self.rightChild = None
 
     def __init__(self,data):
         """
         """
         self.root = self.Node(data)
+        self.root.rb = False
+
 
     def insert(self,data):
         """
         """
         current = self.root
         while(True):
-            if(data < current.data):#Update parent and leftChild
-                parent = current#need to save an instance of the current node
-                current = current.leftChild#the instance saving mechanism works.
-                if(isinstance(parent.leftChild,type(None))):#create new Node
-                    current = self.Node(data)
-                    parent.leftChild = data#hmmm  are these different instances or referencing the same thing... lets test this
+            if(data < current.data):
+                if hasattr(current,'leftChild'):#Check that node has leftChild
+                    current = current.leftChild
+                else:#create that node
+                    current.leftChild = self.Node(data)
+                    #VALIDATE TREE COLOR
                     return
-            if(data > current.data):#Update parent and rightChild
-                parent = current#need to save an instance of the current node
-                current = current.rightChild
-                if(isinstance(parent.rightChild,type(None))):
-                    current = self.Node(data)
-                    parent.rightChild = data
+            if(data > current.data):
+                if hasattr(current,'rightChild'):#Check that node has rightChild
+                    current = current.rightChild
+                else:#create that node
+                    current.rightChild = self.Node(data)
+                    #VALIDATE TREE COLOR
                     return
+    # def insert(self,data):
+    #     """
+    #     """
+    #     current = self.root
+    #     while(True):
+    #         if(data < current.data):#Update parent and leftChild
+    #             parent = current#need to save an instance of the current node
+    #             current = current.leftChild#the instance saving mechanism works.
+    #             if(isinstance(current.data,type(None))):#create new Node
+    #                 current = self.Node(data)
+    #                 #parent.leftChild = data#hmmm  are these different instances or referencing the same thing... lets test this
+    #                 return
+    #         if(data > current.data):#Update parent and rightChild
+    #             parent = current#need to save an instance of the current node
+    #             current = current.rightChild
+    #             if(isinstance(parent.rightChild.data,type(None))):
+    #                 current = self.Node(data)
+    #                 #parent.rightChild = data
+    #                 return
 
         #NEED TO ADD COLORING CAPABILITIES
 
     def delete(self,data):
         """
         """
+        #FIND NODE
+        #CREATE SUBTREE
+        #SAVE SUBTREE
 
 
 # class Tree(object):
