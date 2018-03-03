@@ -7,5 +7,5 @@ install:
 # command to run tests
 script:
   - ./build.sh
-  - ./homework2/RBTree/TestRBTree.py
+  - python ./homework2/RBTree/TestRBTree.py
 #  - pytest # or py.test for Python versions 3.5 and below
