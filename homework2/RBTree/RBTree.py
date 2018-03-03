@@ -49,7 +49,7 @@ class Tree(object):
                 else:#create that node
                     current.rightChild = self.Node(data)
                     current = self.changeColors(current)#Flip Colors on condition
-                    self.valdiateColors(current)#checks rule3
+                    self.validateColors(current)#checks rule3
                     #balance Tree
                     return
 
