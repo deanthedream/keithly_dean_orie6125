@@ -3,9 +3,9 @@ import RBTree
 
 data = 50 #the first node of the tree
 tree = RBTree.Tree(data)
-tree.insert(2)
-tree.insert(60)
-tree.insert(70)
+tree.insert(50)
+tree.insert(40)
+tree.insert(20)
 print(tree.root.rightChild.data)
 print(tree.root.leftChild.data)
 #print(dir(tree))
