@@ -3,6 +3,7 @@
 
 #import statements
 import numpy as np
+import copy
 
 
 #Rule 1. Every Node is Red or Black
@@ -11,28 +12,41 @@ import numpy as np
 #Rule 4. Every path from the root to a leaf, or to a null child, 
 #           must contain the same number of black nodes
 
-#nil = 'nil'
 black = False
 red = True
 
-# class Node(object):
+def depth_first_search(tree,x,branchEnum):
+    """Recusrive Function to Dive Through Each Root to Branch of Tree Path
+    Args: 
+        tree - Tree Object with tree.nil leaves
+        x - current node in branch
+        branchEnum - current boolean array containing left/right movements down branch
+    """
+    T = tree#redefine tree object for understanding
+    branchEnumL = copy.copy(branchEnum)#create a copy of branchEnum for the Left Dive
+    branchEnumL.append(0)#append a 0 because moving left
+    if x.left == T.nil:#If this is a leaf
+        branchEnumL.append('x')#We append a terminator x
+        tree.myArray.append(branchEnumL)#We append fully enumerated list of myArray
+    else:#we have not reached a leaf
+        depth_first_search(tree,x.left,branchEnumL)#recursively call depth_first_search on left branch
 
-#     def __init__(self,key):#,color,left=nil,right=nil,p=nil):
-#         self.key = key #key
-#         self.color = red#True for Red, Black for False
-#         self.left = nil#right child of node key
-#         self.right = nil#left child of node key
-#         self.p = nil#parent of node key
+    branchEnumR = copy.copy(branchEnum)#create a branch copy for Right Dive
+    branchEnumR.append(1)#Append 1 because moving right
+    if x.right == T.nil:#if not at terminator
+        branchEnumR.append('x')#We append a terminator x
+        tree.myArray.append(branchEnumR)#We append fully enumerated list of myArray
+    else:#We have not reached a leaf
+        depth_first_search(tree,x.right,branchEnum)#recursively call depth_first_search on right branch
 
-#     # def __init__(self,key,color,left=nil,right=nil,p=nil):
-#     #     self.key = key #key
-#     #     self.color = False#True for Red, Black for False
-#     #     self.left = left#right child of node key
-#     #     self.right = right#left child of node key
-#     #     self.p = p#parent of node key
-
+    if x.right == T.nil and x.left == T.nil:#Want to print an error if we reach leaves on both
+        print("Root To Leaf")
+        return
 
 class nil(object):
+    """nil must be created outside of Node object otherwise the nil created for each
+    node will be different tree must be instantiated with a nil_leaf
+    """
     def __init__(self):
         self.key = None
         self.color = False
@@ -52,7 +66,7 @@ class Tree(object):
     def __init__(self,key,nil_leaf):
         """Tree must be initialized with a number
         """
-        #Initialize Root
+        #Initialize Root and nil
         self.nil = nil_leaf
         self.root = Node(key,nil_leaf)
         self.root.color = black
@@ -85,36 +99,36 @@ class Tree(object):
         self.RB_insert_fixup(z)# Restore red-black property of tree
 
     def RB_insert_fixup(self,z):
-        '''Restores Red Black Correctness of tree
-        '''
+        """Restores Red Black Correctness of tree
+        """
         T = self
         while z.p.color == red: #The color of the current node's parent is red
             if z.p == z.p.p.left:#current node's parent is left child of grandparent
                 y = z.p.p.right#set y to right child of grandparent
-                if y.color == red:#right child of grandparent is red
+                if y.color == red:#right child of grandparent is red #CASE 1
                     z.p.color = black#parent color is now black
                     y.color = black#right child of grandparent is black
                     z.p.p.color = red#grandparent is red
                     z = z.p.p#the current node is the grandparent
                 else:#right child of grandparent is black
-                    if(z == z.p.right):#The current node is an inside child of left branch
+                    if(z == z.p.right):#The current node is an inside child of left branch #CASE 2
                         z = z.p#set current node to parent of current node
                         self.left_rotate(z)#rotate about parent node
-                    z.p.color = black#color grandparent node to black
+                    z.p.color = black#color grandparent node to black #CASE 3
                     z.p.p.color = red#color current grandparent node to red
                     self.right_rotate(z.p.p)#
             else:#same as then clause above but with left and right swapped
                 y = z.p.p.left
-                if y.color == red:
+                if y.color == red: #CASE 4
                     z.p.color = black
                     y.color = black
                     z.p.p.color = red
                     z = z.p.p
                 else:
-                    if(z == z.p.left):
+                    if(z == z.p.left):#CASE 5
                         z = z.p
                         self.right_rotate(z)
-                    z.p.color = black
+                    z.p.color = black #CASE 6
                     z.p.p.color = red
                     self.left_rotate(z.p.p)
         T.root.color = black#root must be colored black
@@ -135,8 +149,8 @@ class Tree(object):
         v.p = u.p#set v to u
 
     def RB_delete(self,z):
-        '''This function deletes a node from the tree
-        '''
+        """This function deletes a node from the tree
+        """
         T = self
         y=z
         y_original_color = y.color#retain the original color of the node to delete
@@ -210,135 +224,67 @@ class Tree(object):
 
     def left_rotate(self,x):
         T = self
-        y = x.right
-        x.right = y.left
+        y = x.right #Set y
+        x.right = y.left # turn y's right subtree into x's left subtree
         if not y.left == T.nil:
             y.left.p = x
-        y.p = x.p
+        y.p = x.p#relinks x's parent to y
         if x.p == T.nil:
             T.root = y
         elif x == x.p.left:
             x.p.left = y
         else:
             x.p.right = y
-        y.left = x
+        y.left = x #put x on y's right
         x.p = y
 
     def right_rotate(self,x):
         T = self
-        y = x.left
-        x.left = y.right
+        y = x.left #Set y
+        x.left = y.right # turn y's right subtree into x's left subtree
         if not y.right == T.nil:
             y.right.p = x
-        y.p = x.p
+        y.p = x.p #relinks x's parent to y
         if x.p == T.nil:
             T.root = y
         elif x == x.p.right:
             x.p.right = y
         else:
             x.p.left = y
-        y.right = x
+        y.right = x #put x on y's right
         x.p = y
 
-    # def print_tree(self):
-    #     """
-    #     """
+    def print_tree(self):
+        """
+        """
+        T = self
+        x = T.root
 
-    # def depth_first_search(self):
-    #     T = self
-    #     tree = list()
-    #     x = T.root
-    #     tree.append(x.left)
-    #     tree.append(x.right)
+        #Get Max Height of Tree
+        self.init_depth_first_search()
+        maxHeight = [len(self.myArray[i]) for i in np.arange(len(self.myArray))]
 
-    #     while np.any(not tree[i][-1] == None for i in np.arange(len(tree))):#While any elements of tree are not None
-    #         ind = [i for i in np.arange(len(tree)) if not tree[i][-1] == None]#get index of branch without None
-    #         branch = tree[ind]#boolean array not fully explored
+    def init_depth_first_search(self):
+        """Initializes Depth First Search of Tree
+        Updates myArray containing enumeration of all leaf to root branches
+        Ex. [0,0,'x'] would be the root to leftmost branch
+        """
+        T=self
+        x = T.root
+        self.myArray = list()#will contain all boolean arrays
+        #branchEnum = np.zeros((1,1),dtype=bool)
+        branchEnum = list()
+        depth_first_search(self,x,branchEnum)
 
-    #         #Dive to last node in branch
-    #         cnt = 0
-    #         x = T.root
-    #         for i in np.arange(len(branch)):
-    #             if branch[i] == False:#left
-    #                 x = x.left
-    #             else: #branch[i] == True
-    #                 x = x.right
-    #         #x is now at the current unexplored node
-    #         while True:
-    #             #has left been explored
-    #             branch.copy()
-    #             indices = [i for i, s in enumerate(branch) if branch.copy().append(False) in s]
-    #             if 
-
-    #             #has right been explored
-    #             if x.key == None:#If the branch is at a termination
-    #                 branch.append('x')
-    #                 break
-
-
-    # def breadth_first_search(self,G,s):#G is the graph, s is the source node
-    #     let Q be queue
-    #     Q.enqueue(s) #insert s into queue until all its neighbor verticies are marked
-
-    #     mark s as visited
-    #     while (Q is not empty):
-    #         #removing that vertex from queue, whose neighbor will be visited now
-
-    #         v = Q.dequeue()
-
-    #         #processing all neighbors of v
-    #         for all neighbors w of v in Graph G
-    #             if w is not visited
-    #                 Q.enqueue(w)#Stores w in Q to further visit its neighbor
-    #                 mark w as visited
-
-
-
-    # def get_max_tree_height(self):
-    #     """
-    #     """
-    #     T = self
-    #     x = T.root
-    #     cnt = 0#tree height counter
-
-    #     # class queue(object):
-    #     #     def __init__(self,T):
-    #     #         self.p = T.nil
-    #     #         self.left = T.nil
-    #     #         self.right = T.nil
-    #     #         self.toSearch
-
-    #     sQueue = [hasattr(x,'left'),hasattr(x,'right')]
-    #     while not([False,False] == sQueue):#Iterate until top queue indicates both branches of root have been fully explored
-    #         kjashdfkljh
-
-
-    #     def cntHeight(x,cnt,queue):
-    #         return x
-    #     val = cntHeight(T,cnt,)
-
-    #     while len(queue.toSearch) > 0:#There is at least one leaf to search
-
-
-    #     #Get max Val List
-    #     maxValEncoding = list()
-    #     while not x == T.nil:#While we haven't found a leaf
-    #         x = x.right#Move down right branch
-    #         maxValEncoding.append(1)#Append a 1 indicating right branch
-    #         if x == T.nil:
-    #             maxValEncoding.append('x')#Terminator
-
-
-
-
-    #     #Now search Tree
-    #     currentEncoding = list()
-    #     while not currentEncoding == maxValEncoding:
-    #         y = x
-    #         if(not(x.left == T.nil)):#left node is not T.nil
-    #             x = x.left#go down left Branch
-    #             cnt += 1#height is higher
-    #         elif(not(x.right == T.nil)):#the right node is not T.nil
-    #             x = x.right#go down right branch
-    #             cnt += 1#height is higher
-    #         else:#The value is T.nil
+    def find_node(self,key):
+        """Finds Node with key
+        Returns Node with key
+        """
+        T = self
+        x = T.root
+        if x.key == key:
+            return x
+        elif(key < x.key):
+            x = x.left
+        else:#key > x.key
+            x = x.right

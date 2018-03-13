@@ -16,6 +16,9 @@ print(tree.root.key)
 print(tree.root.right.key)
 print(tree.root.left.key)
 
+tree.init_depth_first_search()
+print(tree.myArray)
+
 print(saltyburrito)
 
 ##############################
