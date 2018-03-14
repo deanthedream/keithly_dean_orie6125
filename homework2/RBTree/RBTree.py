@@ -1,20 +1,17 @@
 #Red Black Tree Datastructure
 #Authored by Dean Keithly
-
-#import statements
+from Node import Node
+from nil import nil
 import numpy as np
 import copy
-
 
 #Rule 1. Every Node is Red or Black
 #Rule 2. The root is always black
 #Rule 3. If a node is red, its children must be black
 #Rule 4. Every path from the root to a leaf, or to a null child, 
 #           must contain the same number of black nodes
-
 black = False
 red = True
-
 def depth_first_search(tree,x,branchEnum):
     """Recusrive Function to Dive Through Each Root to Branch of Tree Path
     Args: 
@@ -40,29 +37,10 @@ def depth_first_search(tree,x,branchEnum):
         depth_first_search(tree,x.right,branchEnum)#recursively call depth_first_search on right branch
 
     if x.right == T.nil and x.left == T.nil:#Want to print an error if we reach leaves on both
-        print("Root To Leaf")
+        #print("Root To Leaf")
         return
 
-class nil(object):
-    """nil must be created outside of Node object otherwise the nil created for each
-    node will be different tree must be instantiated with a nil_leaf
-    """
-    def __init__(self):
-        self.key = None
-        self.color = False
-        self.left = None
-        self.right = None
-        self.p = None
-
-class Node(object):
-    def __init__(self,key,nil_leaf):#,color,left=nil,right=nil,p=nil):
-        self.key = key #key
-        self.color = red#True for Red, Black for False
-        self.left = nil_leaf#right child of node key
-        self.right = nil_leaf#left child of node key
-        self.p = nil_leaf#parent of node key
-
-class Tree(object):
+class RBTree(object):
     def __init__(self,key,nil_leaf):
         """Tree must be initialized with a number
         """
@@ -152,15 +130,18 @@ class Tree(object):
         """This function deletes a node from the tree
         """
         T = self
-        y=z
-        y_original_color = y.color#retain the original color of the node to delete
-        if z.left == T.nil:#left branch is a leaf
+        y = z
+        y_original_color = y.color#retain original color of the node to delete
+        if z.left == T.nil:#if left branch is a leaf
             x = z.right#set x to right branch
             self.RB_transplant(z,z.right)#switch node z with its right child
-        else:#right branch is a leaf
-            y = self.tree_min(z.right)
-            y_original_color = y.color
-            x = y.right
+        elif(z.right == T.nil):
+            x = z.left
+            self.RB_transplant(z,z.left)
+        else:
+            y = self.tree_minimum(z.right)#sets y node to minimum node of tree
+            y_original_color = y.color#sets y original color
+            x = y.right#sets current node to t he right node of x
             if y.p == z:
                 x.p = y
             else:
@@ -176,13 +157,13 @@ class Tree(object):
 
     def RB_delete_fixup(self,x):
         T = self
-        while (not (x == T.root)) and (x.color == black):
-            if x == x.p.left:
-                w = x.p.right
-                if w.color == red:
-                    w.color = black
-                    x.p.color = red
-                    self.left_rotate(x.p)
+        while (not (x == T.root)) and (x.color == black):#x is not the root node and the node color is not black
+            if x == x.p.left:#x is a left child
+                w = x.p.right#set w to x's sibling (right child of x's parent)
+                if w.color == red:#If that node is red
+                    w.color = black#color it black
+                    x.p.color = red#set parent color black
+                    self.left_rotate(x.p)#left rotate
                     w = x.p.right
                 if w.left.color == black and w.right.color == black:
                     w.color = red
@@ -200,7 +181,7 @@ class Tree(object):
                     x = T.root
             else: #x == x.p.right???
                 #same as above with left and right switched
-                w = x.p.right
+                w = x.p.left
                 if w.color == red:
                     w.color = black
                     x.p.color = red
@@ -262,7 +243,7 @@ class Tree(object):
 
         #Get Max Height of Tree
         self.init_depth_first_search()
-        maxHeight = [len(self.myArray[i]) for i in np.arange(len(self.myArray))]
+        maxHeight = max([len(self.myArray[i]) for i in np.arange(len(self.myArray))])
 
     def init_depth_first_search(self):
         """Initializes Depth First Search of Tree
@@ -272,7 +253,6 @@ class Tree(object):
         T=self
         x = T.root
         self.myArray = list()#will contain all boolean arrays
-        #branchEnum = np.zeros((1,1),dtype=bool)
         branchEnum = list()
         depth_first_search(self,x,branchEnum)
 
@@ -282,9 +262,21 @@ class Tree(object):
         """
         T = self
         x = T.root
-        if x.key == key:
-            return x
-        elif(key < x.key):
+        cnt = 0
+        while True:
+            cnt += 1
+            if x.key == key:
+                return x
+            elif(key < x.key):
+                x = x.left
+            else:#key > x.key
+                x = x.right
+
+            assert cnt < 10000,'find_node iterated too many times'
+
+    def tree_minimum(self,x):
+        """Iterates until at the very bottom left of tree given
+        """
+        while(x.left.key != None):
             x = x.left
-        else:#key > x.key
-            x = x.right
+        return x

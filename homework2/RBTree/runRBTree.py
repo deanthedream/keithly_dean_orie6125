@@ -1,9 +1,12 @@
-from RBTree import Tree, Node, nil
+from RBTree import RBTree
+from RBTree import nil
+from RBTree import Node
+import numpy as np
 
 
 #data = 50 #the first node of the tree
 nil_leaf = nil()
-tree = Tree(50,nil_leaf)
+tree = RBTree(50,nil_leaf)
 
 
 tree.RB_insert(Node(10,nil_leaf))
@@ -19,18 +22,3 @@ print(tree.root.left.key)
 tree.init_depth_first_search()
 print(tree.myArray)
 
-print(saltyburrito)
-
-##############################
-tree = RBTree.Tree(50)
-tree.insert(50)
-tree.insert(40)
-tree.insert(20)
-print(tree.root.rightChild.data)
-print(tree.root.leftChild.data)
-#print(dir(tree))
-#print(tree.root.data)
-
-
-print(saltyburrito)
-#tree.insert(data)
