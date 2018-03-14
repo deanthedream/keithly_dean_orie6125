@@ -59,10 +59,7 @@ class test_RBTree(unittest.TestCase):
             myLen = len(val)
             for i in np.arange(myLen-1):#delete 100 targets
                 tree.RB_delete(tree.find_node(val[0]))#delete action
-                print(len(val))
-                # if len(val) < 10:
-                #     print val
-                #     print i
+                #print(len(val))
                 tmp = val == val[0]
                 tmp = [not i for i in tmp]
                 val = val[tmp]
