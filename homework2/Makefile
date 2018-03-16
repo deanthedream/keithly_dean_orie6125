@@ -36,8 +36,8 @@ requirements.txt requirements-test.txt: %.txt: %.in | env
 
 # To run a test
 # make test ARG='-k test_location'
-test: env/.requirements
-	env/bin/py.test tests $(ARG)
+test: DIR/env/.requirements
+	DIR/env/bin/py.test tests $(ARG)
 
 script:
 	coverage run -m unittest discover -v
@@ -49,11 +49,11 @@ cover:
 	cp coverage.xml coverage/cobertura-coverage.xml
 
 
-lint: env/.requirements
-	$@/bin/flake8 --max-line-length=100 tests
+lint: DIR/env/.requirements
+	DIR/env/bin/flake8 --max-line-length=100 tests
 
 cover_tests: env/.requirements
-	$@/bin/py.test -s --tb short --cov-config .coveragerc --cov=homework2 --cov=findElement --cov=RBTree --cov=hybridSort --cov=binaryArray --cov-report term-missing --cov-report xml \
+	DIR/env/bin/py.test -s --tb short --cov-config .coveragerc --cov=homework2 --cov=findElement --cov=RBTree --cov=hybridSort --cov=binaryArray --cov-report term-missing --cov-report xml \
 	--cov-report html \
 	--junitxml junit.xml \
 	--no-cov-on-fail \

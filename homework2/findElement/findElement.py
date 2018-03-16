@@ -3,7 +3,7 @@ import random
 import math
 
 def bisect(key,uO,lbi,ubi):
-    print(uO[np.arange(ubi-lbi)+lbi])
+    #print(uO[np.arange(ubi-lbi)+lbi])
     bInd = (ubi-lbi)/2+lbi
     # bIndu= int(math.ceil(bInd))
     # bIndl = int(math.floor(bInd))#bisecting Index
@@ -184,7 +184,7 @@ class findElement(object):
         self.unordered = np.concatenate([self.ordered[np.arange(i+1,self.n)],np.reshape(np.asarray(self.ordered[i]),(1,)),self.ordered[np.arange(0,i)]],axis=0)#includes start, excludes stop
 
     def find_element(self,key):
-        print('Finding Element %d'%key)
+        #print('Finding Element %d'%key)
         uO = self.unordered
         self.key = key
         #Search upper array
