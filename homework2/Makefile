@@ -52,6 +52,10 @@ cover:
 lint: env/.requirements
 	pwd
 	ls
+	cd env
+	ls
+	cd bin
+	ls
 	env/bin/flake8 --max-line-length=100 tests
 
 cover_tests: env/.requirements
