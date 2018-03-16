@@ -36,8 +36,8 @@ requirements.txt requirements-test.txt: %.txt: %.in | env
 
 # To run a test
 # make test ARG='-k test_location'
-test: DIR/env/.requirements
-	DIR/env/bin/py.test tests $(ARG)
+test: env/.requirements
+	env/bin/py.test tests $(ARG)
 
 script:
 	coverage run -m unittest discover -v
