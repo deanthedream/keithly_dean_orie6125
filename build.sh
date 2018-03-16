@@ -1,3 +1,3 @@
 #!/bin/sh
-cd ./homework2/RBTree
+cd ./homework2/
 

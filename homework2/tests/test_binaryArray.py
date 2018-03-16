@@ -1,4 +1,7 @@
 import unittest
+import sys
+sys.path
+sys.path.append('../binaryArray/.')
 from binaryArray.binaryArray import binaryArray
 
 import numpy as np
