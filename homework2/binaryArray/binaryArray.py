@@ -1,16 +1,18 @@
 import numpy as np
 
+
 class binaryArray(object):
-    
+
+
     def __init__(self):
         self.binaryArray = np.random.randint(2, size=10)*2-1#generate a random array of length 10 with 1's and -1's
+
 
     def find_longest(self):
         """A function to find the longest binarySubarray where the sum is 0.
         """
         bA = self.binaryArray
         n = bA.shape[0]#length of binary Array
-
         mySum = np.zeros([n])
         firstList = list()
         lastList = list()
@@ -31,18 +33,13 @@ class binaryArray(object):
             else:#Not in first occurance List so add it
                 firstList.append(mySum[i])#keep track of first Value
                 firstIndex.append(i)#keep track of first index
-
-        #Find index of first occurance of all values that occured more than once
+        # Find index of first occurance of all values that occured more than once
         maxSeq = np.zeros(len(lastList))
         for i in np.arange(len(lastList)):#iterate through all elements in last list
             tmpInd = [k for k in np.arange(len(firstList)) if firstList[k] == lastList[i]][0]
             maxSeq[i] = lastIndex[i] - firstIndex[tmpInd]#difference between last occura and first occurence
-
-
         ind = np.argmax(maxSeq)#Get the index of the maximum
         val = maxSeq[ind]#get the value of the maximum
         lastIndex[ind]#We h
-        
         myInd = [tmpInd for tmpInd in np.arange(len(firstList)) if firstList[tmpInd]==lastList[ind]][0]#Find where this value occurs in first ind
-
         return firstIndex[myInd], lastIndex[ind]

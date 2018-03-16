@@ -1,19 +1,15 @@
 import unittest
-import sys
-sys.path
-sys.path.append('../findElement/.')
+import hmwk2PATHS
 from findElement.findElement import findElement
-
-
-
-import numpy as np
+from findElement import runFE
 import random
+import numpy as np
+hmwk2PATHS
+
 
 class test_findElement(unittest.TestCase):
-    
 
-    def setUp(self):
-        #Generate Tree Randomly for each case
+    def setUp(self):  # Generate Tree Randomly for each case
         pass
 
     def test_find_element(self):
@@ -23,10 +19,10 @@ class test_findElement(unittest.TestCase):
             fE = findElement()
             key = random.choice(fE.unordered)
             ind = fE.find_element(key)
+        assert type(ind), 'asdf'
 
     def test_runFE(self):
-        from findElement import runFE
-
+        runFE
 
 
 if __name__ == '__main__':

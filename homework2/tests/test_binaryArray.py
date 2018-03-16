@@ -1,16 +1,14 @@
 import unittest
-import sys
-sys.path
-sys.path.append('../binaryArray/.')
+import hmwk2PATHS
 from binaryArray.binaryArray import binaryArray
+from binaryArray import runBA
+hmwk2PATHS
 
-import numpy as np
 
 class test_binaryArray(unittest.TestCase):
-    
 
     def setUp(self):
-        #Generate Tree Randomly for each case
+        # Generate Tree Randomly for each case
         pass
 
     def test_find_longest(self):
@@ -20,8 +18,7 @@ class test_binaryArray(unittest.TestCase):
         firstInd, lastInd = bA.find_longest()
 
     def test_runBA(self):
-        from binaryArray import runBA
-
+        runBA
 
 
 if __name__ == '__main__':
