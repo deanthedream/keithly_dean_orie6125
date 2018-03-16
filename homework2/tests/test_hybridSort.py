@@ -19,8 +19,8 @@ class test_hybridSort(unittest.TestCase):
     #     hS = hybridSort()
     #     firstInd, lastInd = hS.find_longest()
 
-    def test_runBA(self):
-        from hybridSort import runBA
+    def test_runHS(self):
+        from hybridSort import runHS
 
 
 
