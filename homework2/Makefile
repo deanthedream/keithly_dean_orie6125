@@ -49,7 +49,7 @@ cover:
 	cp coverage.xml coverage/cobertura-coverage.xml
 
 
-lint: DIR/env/.requirements
+lint: /env/.requirements
 	DIR/env/bin/flake8 --max-line-length=100 tests
 
 cover_tests: env/.requirements
