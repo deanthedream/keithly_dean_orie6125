@@ -67,7 +67,7 @@ cover_tests: env/.requirements
 	#--no-cov-on-fail \
 	#--cov-fail-under=85 \
 	#tests
-	py.test -s --tb short --cov-config .coveragerc --cov=homework2 --cov=findElement --cov=RBTree --cov=hybridSort --cov=binaryArray --cov-report term-missing --cov-report xml \
+	py.test -s --tb short --cov-config .coveragerc --cov=findElement --cov=RBTree --cov=hybridSort --cov=binaryArray --cov-report term-missing --cov-report xml \
 	--cov-report html \
 	--junitxml junit.xml \
 	--no-cov-on-fail \
