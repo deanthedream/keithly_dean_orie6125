@@ -57,7 +57,8 @@ lint: env/.requirements
 	#ls
 	#ls ./env
 	ls ./env/bin
-	env/bin/flake8 --max-line-length=100 tests
+	#env/bin/flake8 --max-line-length=100 tests
+	flake8 --max-line-length=100 tests
 
 cover_tests: env/.requirements
 	env/bin/py.test -s --tb short --cov-config .coveragerc --cov=homework2 --cov=findElement --cov=RBTree --cov=hybridSort --cov=binaryArray --cov-report term-missing --cov-report xml \
