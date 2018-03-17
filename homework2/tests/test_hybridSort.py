@@ -1,6 +1,6 @@
 import unittest
 import hmwk2PATHS  # from hybridSort.hybridSort import hybridSort
-from homework2.hybridSort import runHS
+from hybridSort import runHS
 hmwk2PATHS
 
 
