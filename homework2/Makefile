@@ -27,6 +27,7 @@ env:
 	$@/bin/pip install -U "setuptools>=19,<20"
 	$@/bin/pip install -U "pip>=7,<8"
 	$@/bin/pip install -U "pip-tools==1.6.4"
+	make env/.requirements
 
 env/.requirements: requirements.txt requirements-test.txt | env
 	$|/bin/pip-sync $^
