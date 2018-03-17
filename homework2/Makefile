@@ -10,6 +10,7 @@ clean-build:
 	rm -fr .eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -fr {} +
+	rm -rf env
 
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
@@ -50,9 +51,9 @@ cover:
 
 
 lint: env/.requirements
-	pwd
-	ls
-	ls ./env
+	#pwd
+	#ls
+	#ls ./env
 	ls ./env/bin
 	env/bin/flake8 --max-line-length=100 tests
 
