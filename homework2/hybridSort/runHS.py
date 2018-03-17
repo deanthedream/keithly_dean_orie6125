@@ -1,8 +1,7 @@
 import numpy as np
 import random
 import hmwk2PATHS
-print(sys.path)
-from homework2.hybridSort import hybridSort
+from hybridSort import hybridSort
 hmwk2PATHS
 # import matplotlib.pyplot as plt
 
