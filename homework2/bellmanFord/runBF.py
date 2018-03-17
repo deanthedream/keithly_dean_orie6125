@@ -1,6 +1,5 @@
 import numpy as np
 import random
-
 from bellmanFord import bellmanFord
 from bellmanFord import graph
 
