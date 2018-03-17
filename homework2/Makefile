@@ -45,7 +45,7 @@ script:
 	coverage run -m unittest discover -v
 
 cover:
-	find ../../ -name "flake8"
+	find ../../ -name "*flake8*"
 	make lint #I am no longer calling make lint. It produces several errors that are actually necessary to run the programs
 	make cover_tests
 	mkdir -p coverage
