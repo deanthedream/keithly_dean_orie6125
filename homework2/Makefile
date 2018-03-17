@@ -40,12 +40,12 @@ requirements.txt requirements-test.txt: %.txt: %.in | env
 # make test ARG='-k test_location'
 test: env/.requirements
 	env/bin/py.test tests $(ARG)
-	find ../../ -name "flake8"
 
 script:
 	coverage run -m unittest discover -v
 
 cover:
+	find ../../ -name "flake8"
 	make lint #I am no longer calling make lint. It produces several errors that are actually necessary to run the programs
 	make cover_tests
 	mkdir -p coverage
