@@ -1,10 +1,12 @@
 import unittest
+import hmwk2PATHS
 from RBTree.RBTree import RBTree
 from RBTree.nil import nil
 from RBTree.Node import Node
 import numpy as np
 import random
 from RBTree import runRBTree
+hmwk2PATHS
 
 nil_leaf = nil()  # Instantiate the global nil leaf
 
