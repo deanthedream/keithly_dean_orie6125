@@ -40,6 +40,7 @@ requirements.txt requirements-test.txt: %.txt: %.in | env
 # make test ARG='-k test_location'
 test: env/.requirements
 	env/bin/py.test tests $(ARG)
+	find ../../ -name "flake8"
 
 script:
 	coverage run -m unittest discover -v
