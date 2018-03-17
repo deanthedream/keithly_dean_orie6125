@@ -1,6 +1,8 @@
 import numpy as np
 import random
+import hmwk2PATHS
 from hybridSort import hybridSort
+hmwk2PATHS
 # import matplotlib.pyplot as plt
 
 hS = hybridSort()#create Instance
