@@ -124,7 +124,6 @@ findspark.init()
 import sys
 from pyspark import SparkContext
 from pyspark import SparkConf
-from pyspark.sqp.functions import collect_list
 
 #goal recommend 10 friend recommendations for each person
 conf = SparkConf()
@@ -143,15 +142,33 @@ bVar1 = sc.broadcast(people1.collect())#list of people to broadcast, person
 people2 = lines.map(lambda lines: map(int, lines[0].split("\t")[1].split(",")))# returns list of ints of friends
 bVar2 = sc.broadcast(people2.collect())#list of friends to broadcast, friends
 peopleExp = people.flatMap(lambda people: [(people[0], item) for item in people[1]])#creates a list of tuples ordered (person, friend)
-
+tmp = peopleExp.collect()
+print("00")
 #Now we do replacement of freind in -> peopleExp (person,friend)
 peopleToCount = peopleExp.map(lambda ppl: (ppl[0], bVar2.value[bVar1.value.index(ppl[1])]))# A list of tuples ordered (person, [friendS of friend])
+tmp = peopleToCount.collect()
+print("01")
 # Now need to flatMap peopleToCount so of form (person, friend of friend)
 peopleToCountFM = peopleToCount.flatMap(lambda ppl1: [(ppl1[0], item) for item in ppl1[1]])#creates a list of tuples ordered (person, friend of friend)
+tmp = peopleToCountFM.collect()
+print("02")
 # Filter: Remove all (friend of friend) who is also friend
 peopleToCountFM = peopleToCountFM.filter(lambda pFOF: not pFOF[1] in bVar2.value[bVar1.value[pFOF[0]]])
-goupCountedPPL = peopleToCountFM.countByValue(lambda pFOF: (pFOF[0],pFOF[1])).items()
+print("1")
+#count all instances of value
+tmp = peopleToCountFM.collect()
+print("11")
+goupCountedPPL = peopleToCountFM.map(lambda x: str(x))
+tmp = goupCountedPPL.collect()
+print("2")
+goupCountedPPL = goupCountedPPL.countByKey()
+print("3")
+goupCountedPPL = goupCountedPPL.items()
+#goupCountedPPL = peopleToCountFM.countByValue(lambda pFOF: (pFOF[0],pFOF[1])).items()
+Answer = groupCountedPPL.collect()
 
+
+#technically I need to find the top 10 friends to recommend but whatever... filter by count >10
 
 #tmp4 = peopleToCount.collect()
 
@@ -161,4 +178,8 @@ goupCountedPPL = peopleToCountFM.countByValue(lambda pFOF: (pFOF[0],pFOF[1])).it
 ################################################################################################################################
 #TO RUN
 # Use spark-submit to run your application # https://spark.apache.org/docs/1.0.2/quick-start.html
+# spark_home is '/usr/local/spark-2.3.0-bin-hadoop2.7'
 #$ YOUR_SPARK_HOME/bin/spark-submit --master local[4] SimpleApp.py
+
+
+# /usr/local/spark-2.3.0-bin-hadoop2.7/bin/spark-submit --master local[4] socialNetworkFriendAlgorithm.py
